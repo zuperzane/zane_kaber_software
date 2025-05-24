@@ -3,6 +3,7 @@
 #include "software/ai/evaluation/find_open_areas.h"
 #include "software/ai/hl/stp/tactic/move_primitive.h"
 #include "software/math/math_functions.h"
+#include "software/logger/logger.h"   
 
 Point GoalieFSM::getGoaliePositionToBlock(
     const Ball &ball, const Field &field,
@@ -181,6 +182,7 @@ void GoalieFSM::panic(const Update &event)
                      Segment(event.common.world_ptr->ball().position(), stop_ball_point));
     Angle goalie_orientation =
         (event.common.world_ptr->ball().position() - goalie_pos).orientation();
+    LOG(INFO) << goalie_pos;
 
     event.common.set_primitive(std::make_unique<MovePrimitive>(
         event.common.robot, goalie_pos, goalie_orientation, max_allowed_speed_mode,

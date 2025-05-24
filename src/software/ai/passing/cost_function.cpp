@@ -333,6 +333,8 @@ double rateKeepAwayPosition(const Point& keep_away_position, const World& world,
     Pass updated_best_pass(keep_away_position, best_pass_so_far.receiverPoint(),
                            best_pass_so_far.speed());
 
+        //LOG(INFO) << best_pass_so_far.receiverPoint()
+          //        << keep_away_position;
     double enemy_receiver_proximity_risk =
         calculateProximityRisk(keep_away_position, world.enemyTeam(), passing_config);
     double intercept_risk =
