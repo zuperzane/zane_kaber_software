@@ -15,26 +15,25 @@
 #include "software/embedded/services/network/network.h"
 #include "software/embedded/services/power.h"
 #include "software/logger/logger.h"
-#include "software/world/robot_state.h"
 
 class Thunderloop
 {
    public:
     /**
      * Thunderloop is a giant loop that runs at THUNDERLOOP_HZ.
-     * It receives Primitives and World from AI, executes the primitives with
-     * the most recent vison data, and polls the services to interact with the hardware
-     * peripherals.
+     * It receives Primitives from AI, executes the Primitives with
+     * the most recent vison data, and polls the services to interact
+     * with the hardware peripherals.
      *
      * High Level Diagram: Service order in loop not shown
      *
      *                   ┌─────────────────┐
      *                   │                 │
-     *                   │   ThunderLoop   │
+     *                   │   Thunderloop   │
      *                   │                 │
      *  Primitives───────►                 │ Target Vel ┌────────────┐
      *                   │                 ├────────────►            │
-     *  World ───────────►                 │            │ MotorBoard │
+     *                   |                 │            │ MotorBoard │
      *                   │    Services     ◄────────────┤            │
      *                   │                 │ Actual Vel └────────────┘
      *                   │  Primitive Exec │
@@ -100,13 +99,32 @@ class Thunderloop
     void updateErrorCodes();
 
     /**
+     * Poll the motor service.
+     *
+     * @param poll_time Populates the time taken to poll the service
+     * @param motor_control Control message for the motors
+     * @param time_since_prev_iteration Stores the time difference since the last call
+     */
+    TbotsProto::MotorStatus pollMotorService(
+        struct timespec &poll_time, const TbotsProto::MotorControl &motor_control,
+        const struct timespec &time_since_prev_iteration);
+
+    /**
+     * Poll the power service
+     *
+     * @param poll_time Populates the time taken to poll the service
+     *
+     * @return The polled power status message
+     */
+    TbotsProto::PowerStatus pollPowerService(struct timespec &poll_time);
+
+    /**
      * Wait for networking communication to be established. This function is blocking.
      */
     void waitForNetworkUp();
 
 
     // Input Msg Buffers
-    TbotsProto::PrimitiveSet primitive_set_;
     TbotsProto::World world_;
     TbotsProto::Primitive primitive_;
     TbotsProto::DirectControlPrimitive direct_control_;

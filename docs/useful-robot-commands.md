@@ -1,27 +1,29 @@
-Table of Contents
-=================
+# Useful Robot Commands
 
-* [Table of Contents](#table-of-contents)
-* [Common Debugging Steps](#common-debugging-steps)
-* [Off Robot Commands](#off-robot-commands)
-   * [Wifi Disclaimer](#wifi-disclaimer)
-   * [Miscellaneous Ansible Tasks &amp; Options](#miscellaneous-ansible-tasks--options)
-   * [Flashing the robot's compute module](#flashing-the-robots-compute-module)
-   * [Flashing the powerboard](#flashing-the-powerboard)
-   * [Setting up the embedded host](#setting-up-the-embedded-host)
-      * [Jetson Nano](#jetson-nano)
-      * [Raspberry Pi](#raspberry-pi)
-   * [Robot Diagnostics](#robot-diagnostics)
-      * [For Just Diagnostics](#for-just-diagnostics)
-      * [For AI + Diagnostics](#for-ai--diagnostics)
-   * [Robot Auto Test](#robot-auto-test)
-* [On Robot Commands](#on-robot-commands)
-   * [Systemd Services](#systemd-services)
-   * [Debugging Uart](#debugging-uart)
-   * [Redis](#redis)
+# Table of Contents
 
-<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+<!--TOC-->
 
+- [Table of Contents](#table-of-contents)
+- [Common Debugging Steps](#common-debugging-steps)
+- [Off Robot Commands](#off-robot-commands)
+  - [Wifi Disclaimer](#wifi-disclaimer)
+  - [Miscellaneous Ansible Tasks & Options](#miscellaneous-ansible-tasks--options)
+  - [Flashing the robot's compute module](#flashing-the-robots-compute-module)
+  - [Flashing the powerboard](#flashing-the-powerboard)
+  - [Setting up the embedded host](#setting-up-the-embedded-host)
+    - [Jetson Nano](#jetson-nano)
+    - [Raspberry Pi](#raspberry-pi)
+  - [Robot Diagnostics](#robot-diagnostics)
+    - [For Just Diagnostics](#for-just-diagnostics)
+    - [For AI + Diagnostics](#for-ai--diagnostics)
+  - [Robot Auto Test](#robot-auto-test)
+- [On Robot Commands](#on-robot-commands)
+  - [Systemd Services](#systemd-services)
+  - [Debugging Uart](#debugging-uart)
+  - [Redis](#redis)
+
+<!--TOC-->
 
 # Common Debugging Steps
 ```mermaid
@@ -78,9 +80,13 @@ flowchart TD
 
 ## Wifi Disclaimer
 
-To use most of these commands you will either need to be on the tbots wifi network (no internet access) or on a wifi with internet access (shawopen, ubc wifi) and connected to the Jetson Nano through ethernet tethering. 
+To use most of these commands you will either need to be on the tbots wifi network (no internet access) or on a WiFi with internet access (`ubcvisitor`) and connected to the robot through ethernet tethering. Note that ethernet tethering doesn't work on `ubcsecure` or `eduroam`.
 
-The IP address of the robots on the tbots network is `192.168.0.20<robot_id>` so for robot id `1` the IP is `192.168.0.201`. If you are using ethernet tethering you will need to use a network utility (tshark, wireshark, arp) to determine the IP address.
+On the tbots network:
+- Jetson Nano robots will have an IP address of `192.168.0.20<robot_id>` so for robot id `1` the IP is `192.168.0.201`.
+- Raspberry Pi robots will have an IP address of `192.168.6.20<robot_id>` so for robot id `1` the IP is `192.168.6.201`. Occasionally, these robots may have an IP address of `192.168.5.20<robot_id>`.
+
+If you are not using the tbots network you will need to use a network utility (`tshark`, `wireshark`, `arp`) to determine the IP address.
 
 ## Miscellaneous Ansible Tasks & Options
 

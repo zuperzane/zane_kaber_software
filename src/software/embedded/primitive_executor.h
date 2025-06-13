@@ -5,7 +5,9 @@
 #include "software/ai/navigator/trajectory/bang_bang_trajectory_1d_angular.h"
 #include "software/ai/navigator/trajectory/trajectory_path.h"
 #include "software/geom/vector.h"
-#include "software/world/world.h"
+#include "software/time/duration.h"
+#include "software/world/robot_state.h"
+#include "software/world/team_types.h"
 
 class PrimitiveExecutor
 {
@@ -24,10 +26,10 @@ class PrimitiveExecutor
                                const RobotId robot_id);
 
     /**
-     * Update primitive executor with a new Primitive Set
-     * @param primitive_set_msg The primitive to start
+     * Update primitive executor with a new Primitive
+     * @param primitive_msg The primitive to start
      */
-    void updatePrimitiveSet(const TbotsProto::PrimitiveSet &primitive_set_msg);
+    void updatePrimitive(const TbotsProto::Primitive &primitive_msg);
 
     /**
      * Set the current primitive to the stop primitive
